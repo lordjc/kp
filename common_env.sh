@@ -1,0 +1,23 @@
+kinit interdev -kt ~/.secure/interdev.keytab
+table_name=${1^^}
+user_name=KP_WELLNESS_REPOSITORY
+remote_db_name=KP_WELLNESS_REPOSITORY
+full_table_name=${remote_db_name}.${table_name}
+staging_table=${table_name}_STAGE
+partitioned_table=${table_name}_PART
+merged_table=${table_name}_MERGE
+db_name=kp_wellness_repository
+top_dir=data/kp_wellness_repository
+staging_dir=${top_dir}/sqoop
+metadata_dir=${top_dir}/metadata
+archive_dir=${top_dir}/archive
+schema_name=${table_name}.schema
+password_file=/${metadata_dir}/.${user_name}_passwd
+mappers=${2-4}
+job_name=${table_name}_JOB
+#check_column="decode(created_date,null,modified_date,modified_date,null,created_date,greatest(created_date,modified_date))"
+check_column="nvl(nvl(greatest(created_date,modified_date),modified_date),created_date)"
+connect_string=jdbc:oracle:thin:kp_wellness_repository/password@//scan-szaudb12.ssdc.kp.org:1521/mcoeu01r_oltp.ssdc.kp.org
+partition_column=created_date
+curr_date=`date +"%Y_%m_%d_%H_%M"`
+sqoop_metastore=jdbc:hsqldb:hsql://pzxdap5priv:16000/sqoop
