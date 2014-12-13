@@ -21,6 +21,7 @@ As well as more complex workflows built using multiple actions that automate an 
 - Daily appends
 - Purging of directories
 - Management of staging and prod directories
+- Append to partitions
 
 
 
