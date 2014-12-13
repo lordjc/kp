@@ -1,0 +1,1 @@
+echo `beeline -u "jdbc:hive2://azh7-1.ent.cloudera.com:10000/default" --silent=true --showHeader=false  --outputformat=csv -e "show columns from cars_tmp;" | grep -v 'price\|color\|gears' | sed '1d' | tr '\n' ','  | sed 's/.$//'`
